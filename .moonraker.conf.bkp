@@ -1,0 +1,121 @@
+[server]
+host = 0.0.0.0
+port = 7125
+max_upload_size = 1024
+
+[file_manager]
+enable_object_processing = True
+
+[machine]
+provider = systemd_dbus
+sudo_password = ender3Klipper
+
+[authorization]
+cors_domains = 
+	https://my.mainsail.xyz
+	http://my.mainsail.xyz
+	http://*.local
+	http://*.lan
+trusted_clients = 
+	10.0.0.0/8
+	127.0.0.0/8
+	127.0.0.1
+	169.254.0.0/16
+	172.16.0.0/12
+	192.168.0.0/16
+	FE80::/10
+	::1/128
+
+[octoprint_compat]
+
+[history]
+
+[announcements]
+subscriptions = 
+	octoeverywhere
+
+[update_manager]
+refresh_interval = 168
+enable_auto_refresh = True
+
+[update_manager mainsail]
+type = web
+channel = stable
+repo = mainsail-crew/mainsail
+path = ~/mainsail
+
+[update_manager crowsnest]
+type = git_repo
+path = ~/crowsnest
+origin = https://github.com/mainsail-crew/crowsnest.git
+primary_branch = legacy/v3
+install_script = tools/install.sh
+
+[update_manager sonar]
+type = git_repo
+path = ~/sonar
+origin = https://github.com/mainsail-crew/sonar.git
+primary_branch = main
+managed_services = sonar
+
+[power 3dprinter_power]
+type = homeassistant
+on_when_job_queued = True
+restart_klipper_when_powered = True
+address = 172.30.31.10
+port = 8123
+device = switch.ender_3_power
+token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhZTM3NDA1NDEzZDY0NzI2OTEyOThkMDAwOTI0ZTgwNyIsImlhdCI6MTY2NTUwMzgwMiwiZXhwIjoxOTgwODYzODAyfQ.C2Qc1GGZOUebfsjrj1oKgPpwAsJE5qExj-50snuJO1U
+domain = switch
+bound_services = klipper
+
+[power enclosure_ligh]
+type = homeassistant
+address = 172.30.31.10
+port = 8123
+device = light.ender_3_light_strip
+token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhZTM3NDA1NDEzZDY0NzI2OTEyOThkMDAwOTI0ZTgwNyIsImlhdCI6MTY2NTUwMzgwMiwiZXhwIjoxOTgwODYzODAyfQ.C2Qc1GGZOUebfsjrj1oKgPpwAsJE5qExj-50snuJO1U
+domain = light
+
+[mqtt]
+address = 172.30.31.10
+port = 1883
+username = Alex
+password = Ollie2@22
+mqtt_protocol = v3.1.1
+enable_moonraker_api = True
+instance_name = ender3
+
+[update_manager octoeverywhere]
+type = git_repo
+channel = beta
+path = /home/pi/octoeverywhere
+origin = https://github.com/QuinnDamerell/OctoPrint-OctoEverywhere.git
+env = /home/pi/octoeverywhere-env/bin/python
+requirements = requirements.txt
+install_script = install.sh
+managed_services = 
+	octoeverywhere
+
+[update_manager Klipper-Adaptive-Meshing-Purging]
+type = git_repo
+channel = dev
+path = ~/Klipper-Adaptive-Meshing-Purging
+origin = https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging.git
+managed_services = klipper
+primary_branch = main
+
+[update_manager mobileraker]
+type = git_repo
+path = ~/mobileraker_companion
+origin = https://github.com/Clon1998/mobileraker_companion.git
+primary_branch = main
+managed_services = mobileraker
+virtualenv = ~/mobileraker-env
+requirements = scripts/mobileraker-requirements.txt
+install_script = scripts/install-mobileraker-companion.sh
+
+[spoolman]
+server = http://172.30.31.40:7912/
+sync_rate = 5
+
